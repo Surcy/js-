@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>knockout.js例子实践Simple list</title>
+	<script src="http://code.jquery.com/jquery-1.4.2.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
+</head>
+
+<body>
+	<form data-bind="submit: addItem">
+		New item:
+		<input data-bind='value: itemToAdd, valueUpdate: "afterkeydown"' />
+		<button type="submit" data-bind="enable: itemToAdd().length > 0">Add</button>
+		<p>Your items:</p>
+		<select multiple="multiple" width="50" data-bind="options: items"> </select>
+	</form>
+	<script type='text/javascript'>
+		var viewModel = {};
+		viewModel.items = ko.observableArray(["Alpha", "Beta", "Gamma"]);
+		viewModel.itemToAdd = ko.observable("");
+		viewModel.addItem = function () {
+			if (viewModel.itemToAdd() != "") {
+				viewModel.items.push(viewModel.itemToAdd());
+				// Adds the item. Writing to the "items" observableArray causes any associated UI to update.
+
+				viewModel.itemToAdd("");
+				// Clears the text box, because it's bound to the "itemToAdd" observable
+			}
+		}
+
+		ko.applyBindings(viewModel);
+	</script>
+</body>
+
+</html>

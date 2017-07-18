@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>knockout.js例子实践Better list</title>
+	<script src="http://code.jquery.com/jquery-1.4.2.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
+</head>
+
+<body>
+	<form data-bind="submit: addItem">
+		New item:
+		<input data-bind='value: itemToAdd, valueUpdate: "afterkeydown"' />
+		<button type="submit" data-bind="enable: itemToAdd().length > 0">Add</button>
+		<!--<p>Your items:</p>
+		<select multiple="multiple" width="50" data-bind="options: items"> </select>-->
+
+		<p>Your values:</p>
+		<select multiple="multiple" height="5" data-bind="options:allItems, selectedOptions:selectedItems"> </select>
+
+		<div>
+			<button data-bind="click: removeSelected, enable: selectedItems().length > 0">Remove</button>
+			<button data-bind="click: function() { allItems.sort() }, enable: allItems().length > 1">Sort</button>
+		</div>
+	</form>
+	<script type='text/javascript'>
+		/*var viewModel = {};
+						viewModel.items = ko.observableArray(["Alpha", "Beta", "Gamma"]);
+						viewModel.itemToAdd = ko.observable("");
+						viewModel.addItem = function () {
+							if (viewModel.itemToAdd() != "") {
+								viewModel.items.push(viewModel.itemToAdd());
+								// Adds the item. Writing to the "items" observableArray causes any associated UI to update.
+
+								viewModel.itemToAdd("");
+								// Clears the text box, because it's bound to the "itemToAdd" observable
+							}
+						}
+
+						ko.applyBindings(viewModel);*/
+
+		var betterListModel = function () {
+			this.itemToAdd = new ko.observable("");
+			this.allItems = new ko.observableArray(["Fries", "Eggs Benedict", "Ham", "Cheese"]);
+
+			// Initial items
+
+			this.selectedItems = new ko.observableArray(["Eggs Benedict"]);
+
+			// Initial selection
+
+			this.addItem = function () {
+				if ((this.itemToAdd() != "") && (this.allItems.indexOf(this.itemToAdd()) < 0))
+				// Prevent blanks and duplicates
+					this.allItems.push(this.itemToAdd());
+				this.itemToAdd(""); // Clear the text box
+			}
+
+			this.removeSelected = function () {
+				this.allItems.removeAll(this.selectedItems());
+				this.selectedItems([]); // Clear selection
+			}
+		};
+
+		ko.applyBindings(new betterListModel());
+	</script>
+</body>
+
+</html>
