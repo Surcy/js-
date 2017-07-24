@@ -11,56 +11,55 @@
 
 <body>
 	<form action="/someServerSideHandler">
-	<p>
-	You have asked for <span data-bind="text: gifts().length">&nbsp;</span> gift(s)</p>
-	<table data-bind="visible: gifts().length > 0">
-	<thead>
-		<tr>
-			<th>Gift name</th>
-			<th>Price</th>
-			<th></th>
-		</tr>
-	</thead>
-	<tbody data-bind='template: { name: "giftRowTemplate", foreach: gifts }'>
-	</tbody>
-	</table>
-	<button data-bind="click: addGift">
-	Add Gift</button>
-	<button data-bind="enable: gifts().length > 0" type="submit">
-	Submit</button>
+		<p>
+		You have asked for <span data-bind="text: gifts().length">&nbsp;</span> gift(s)</p>
+		<table data-bind="visible: gifts().length > 0">
+			<thead>
+				<tr>
+					<th>Gift name</th>
+					<th>Price</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody data-bind='template: { name: "giftRowTemplate", foreach: gifts }'>
+			</tbody>
+		</table>
+		<button data-bind="click: addGift">Add Gift</button>
+		<button data-bind="enable: gifts().length > 0" type="submit">Submit</button>
 	</form>
+
 	<script type="text/html" id="giftRowTemplate">
-	<tr>
-		<td><input class="required" data-bind="value: name, uniqueName: true"/></td>
-		<td><input class="required number" data-bind="value: price, uniqueName: true"/></td>
-		<td><a href="#" data-bind="click: function() { viewModel.removeGift($data) }">Delete</a></td>
-	</tr>
+		<tr>
+			<td><input class="required" data-bind="value: name, uniqueName: true"/></td>
+			<td><input class="required number" data-bind="value: price, uniqueName: true"/></td>
+			<td><a href="#" data-bind="click: function() { viewModel.removeGift($data) }">Delete</a></td>
+		</tr>
 	</script>
+
 	<script type='text/javascript'>
-	var viewModel = {
-	gifts: ko.observableArray([
-		{ name: "Tall Hat", price: "39.95" },
-		{ name: "Long Cloak", price: "120.00" }
-	]),
+		var viewModel = {
+			gifts: ko.observableArray([
+				{ name: "Tall Hat", price: "39.95" },
+				{ name: "Long Cloak", price: "120.00" }
+			]),
 
-	addGift: function () {
-		this.gifts.push({ name: "", price: "" });
-	},
+			addGift: function () {
+				this.gifts.push({ name: "", price: "" });
+			},
 
-	removeGift: function (gift) {
-		this.gifts.remove(gift);
-	},
+			removeGift: function (gift) {
+				this.gifts.remove(gift);
+			},
 
-	save: function (form) {
-		alert("Could now transmit to server: " + ko.utils.stringifyJson(this.gifts));
-		// To transmit to server, write this: ko.utils.postJson($("form")[0], this.gifts);
-	}
-	};
+			save: function (form) {
+				alert("Could now transmit to server: " + ko.utils.stringifyJson(this.gifts));
+				// To transmit to server, write this: ko.utils.postJson($("form")[0], this.gifts);
+			}
+		};
 
-	ko.applyBindings(viewModel);
-
-	$("form").validate({ submitHandler: function () { viewModel.save() } });
-	</script>
+		ko.applyBindings(viewModel);
+		$("form").validate({ submitHandler: function () { viewModel.save() } });
+		</script>
 </body>
 
 </html>

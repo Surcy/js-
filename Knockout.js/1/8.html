@@ -7,37 +7,39 @@
 	<script src="http://code.jquery.com/jquery-1.4.2.min.js"></script>
 	<script src="js/jquery.tmpl.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
-	<script src="js/knockout.simpleGrid.js"></script>
 </head>
 
 <body>
 	<h2>Planets</h2>
 	<p>
-	<label>
-		<input type="checkbox" data-bind="checked: displayAdvancedOptions"/>
-		Display advanced options
-	</label>
+		<label>
+			<input type="checkbox" data-bind="checked: displayAdvancedOptions"/>
+			Display advanced options
+		</label>
 	</p>
 	<p data-bind="fadeVisible: displayAdvancedOptions">
-	Show:
-	<label><input type="radio" value="all" data-bind="checked: typeToShow"/>All</label>
-	<label><input type="radio" value="rock" data-bind="checked: typeToShow"/>Rocky planets</label>
-	<label><input type="radio" value="gasgiant" data-bind="checked: typeToShow"/>Gas giants</label>
+		Show:
+		<label><input type="radio" value="all" data-bind="checked: typeToShow"/>All</label>
+		<label><input type="radio" value="rock" data-bind="checked: typeToShow"/>Rocky planets</label>
+		<label><input type="radio" value="gasgiant" data-bind="checked: typeToShow"/>Gas giants</label>
 	</p>
 	<div data-bind='template: { name: "planetsTemplate",
 							foreach: planetsToShow,
 							beforeRemove: function(elem) { $(elem).slideUp(function() { $(elem).remove(); }) },
 							afterAdd: function(elem) { $(elem).hide().slideDown() } }'>
 	</div>
+
 	<script type="text/html" id="planetsTemplate">
-	<div class="planet ${ type }">${ name }</div>
+		<div class="planet ${ type }">${ name }</div>
 	</script>
+
 	<p data-bind="fadeVisible: displayAdvancedOptions">
-	<button data-bind='click: function() { addPlanet("rock") }'>
-		Add rocky planet</button>
-	<button data-bind='click: function() { addPlanet("gasgiant") }'>
-		Add gas giant</button>
+		<button data-bind='click: function() { addPlanet("rock") }'>
+			Add rocky planet</button>
+		<button data-bind='click: function() { addPlanet("gasgiant") }'>
+			Add gas giant</button>
 	</p>
+
 	<script type='text/javascript'>
 		var viewModel = {
 		planets: ko.observableArray([

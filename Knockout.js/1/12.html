@@ -10,52 +10,51 @@
 </head>
 
 <body>
-	<div class="loadingIndicator">
-	Loading...</div>
+	<div class="loadingIndicator">Loading...</div>
 	<div class="configuration">
-	<div class="listChooser">
-		<button data-bind='click: deleteList, enable: editingList.name'>
-			Delete</button>
-		<button data-bind='click: saveChanges, enable: hasUnsavedChanges'>
-			Save</button>
-		<select data-bind='options: savedLists, optionsValue: "name", value: editingList.name'>
-		</select>
-	</div>
-	<p>
-		Currently viewing <span data-bind="text: editingList.userNames().length">&nbsp;</span>
-		user(s):</p>
-	<div class="currentUsers" data-bind='template: { name: "usersTemplate", data: editingList }'>
-	</div>
-	<form data-bind="submit: addUser">
-	<label>
-		Add user:</label>
-	<input data-bind='value: userNameToAdd, valueUpdate: "keyup", css: { invalid: !userNameToAddIsValid() }' />
-	<button type="submit" data-bind='enable: userNameToAddIsValid() && userNameToAdd() != ""'>
-		Add</button>
-	</form>
+		<div class="listChooser">
+			<button data-bind='click: deleteList, enable: editingList.name'>
+				Delete</button>
+			<button data-bind='click: saveChanges, enable: hasUnsavedChanges'>
+				Save</button>
+			<select data-bind='options: savedLists, optionsValue: "name", value: editingList.name'>
+			</select>
+		</div>
+		<p>
+			Currently viewing <span data-bind="text: editingList.userNames().length">&nbsp;</span>
+			user(s):</p>
+		<div class="currentUsers" data-bind='template: { name: "usersTemplate", data: editingList }'>
+		</div>
+		<form data-bind="submit: addUser">
+			<label>Add user:</label>
+			<input data-bind='value: userNameToAdd, valueUpdate: "keyup", css: { invalid: !userNameToAddIsValid() }' />
+			<button type="submit" data-bind='enable: userNameToAddIsValid() && userNameToAdd() != ""'>Add</button>
+		</form>
 	</div>
 	<div class="tweets" data-bind='template: { name: "tweetsTemplate", data: currentTweets }'>
 	</div>
+
 	<script type="text/html" id="tweetsTemplate">
-	<table width="100%">
-		{{each $data}}
-			<tr>
-				<td><img src="${ profile_image_url }"/></td>
-				<td>
-					<a class="twitterUser" href="http://twitter.com/${ from_user }">${ from_user }</a>
-					${ text }
-					<div class="tweetInfo">${ created_at }</div>
-	</td>
-	</tr>
-		{{/each}}
-	</table>
+		<table width="100%">
+			{{each $data}}
+				<tr>
+					<td><img src="${ profile_image_url }"/></td>
+					<td>
+						<a class="twitterUser" href="http://twitter.com/${ from_user }">${ from_user }</a>
+						${ text }
+						<div class="tweetInfo">${ created_at }</div>
+					</td>
+				</tr>
+			{{/each}}
+		</table>
 	</script>
+
 	<script type="text/html" id="usersTemplate">
-	<ul>
-		{{each(i, userName) userNames()}}
-			<li><button data-bind="click: function() { userNames.remove(userName) }">Remove</button> <div>${ userName }</div></li>
-		{{/each}}
-	</ul>
+		<ul>
+			{{each(i, userName) userNames()}}
+				<li><button data-bind="click: function() { userNames.remove(userName) }">Remove</button> <div>${ userName }</div></li>
+			{{/each}}
+		</ul>
 	</script>
 	<script type='text/javascript'>
 		// The view model holds all the state we're working with. It also has methods that can edit it, and it uses
